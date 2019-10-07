@@ -1,0 +1,81 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+{% block title %}Homepage - {{ block.super }}{% endblock %}
+{% block content %}
+	<div class="main-container">
+	<div class="top-container">
+		<div class="main_logo">
+			<h1>Bank of America <img src="{% static "images/logo.png" %}"></h1>
+		</div>
+		<div class="search-bar">
+			<input type="text" placeholder="Search..">
+		</div>
+	</div>
+	<ul id="menu">
+	  <li>Checking</li>
+	  <li>Savings</li>
+	  <li>Credit Cards</li>
+	  <li>Home Loans</li>
+	  <li>Loan Portal</li>
+	</ul> 
+	<h2>Welcome to the new Loan Portal - powered by Box</h2>
+	<!-- </div> -->
+
+	<div class="container">
+
+		<div class="process_walkthrough">
+			<div class="grid-container">
+				  <div class="grid-item-image"><img src="{% static "images/property.svg" %}" height="75"></div>
+				  <div class="grid-item-image"><img src="{% static "images/zoom.svg" %}" height="75"></div>
+				  <div class="grid-item-image"><img src="{% static "images/earnings.svg" %}" height="75"></div>
+				  <div class="grid-item-description">Submit your application online now. No faxing required.</div>
+				  <div class="grid-item-description">We'll review your application. This process usually takes 48-72 hours.</div>
+				  <div class="grid-item-description">If approved, your loan will be desposited within 24 hours, so you can get back to growing your business.</div>
+			</div>
+		</div>
+		<div class="login_area">
+				<form method="post" class=login>
+				  {% csrf_token %}
+				  {{ form.as_p }}
+				  <button type="submit">Login</button>
+				</form>
+<!-- 			<form method="POST" class="login" action="/login/">
+				{% csrf_token %}
+  				{{ form.as_p }}
+				<input type="text" name="username" placeholder="Online ID"><br>
+				<input type="text" name="password" placeholder="Password"><br>				<input type="checkbox" name="save" value="save_id">Save Online ID<br> -->
+<!-- 				<input type="submit" value="Submit">
+				<p>Forgot ID/Password?</p>
+				<p>Create an Account</p>
+			</form> -->
+		</div>
+	</div>
+	<br>
+	<div class="photo-container">
+		<div class="left-photo">
+			<div class="left-info-box">
+				<h3>Apply Quickly. No More Faxes!</h3>
+				<p>Box's cloud content management tools handle your data simply and securely.</p>
+			</div>	
+			<img src="{% static "images/stock_laptop.jpg" %}" width="100%">
+		</div>
+		<div class="right-photo">
+			<div class="right-info-box">
+				<h3>Track Your Status Along the Way</h3>
+				<p>We will provide updates from start to finish to make sure you're informed.</p>
+			</div>
+			<img src="{% static "images/coffee-shop.jpg" %}" width="100%">
+		</div>
+	</div>
+	<footer></footer>
+</div>
+<!-- 	<div class="bottom-container">
+	</div>	 -->
+{% endblock %}
+
+<h2>Login</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Login</button>
+</form>

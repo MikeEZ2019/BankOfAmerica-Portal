@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+	<div class="header_bar">
+		<ul>
+			<li>Personal</li>
+			<li>Wealth Management</li>
+			<li>Small Business</li>
+			<li>About Us</li>
+		</ul>
+	</div>
+
+
+	<title>
+		{% block title %}My Hello Web App Project{% endblock %}
+	</title>
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	{% block header %}{% endblock %}
+</head>
+<body>
+	<!-- As well as override this content -->
+	{% block content %}{% endblock %}
+	{% block footer %}{% endblock %}
+</body>
+</html>
