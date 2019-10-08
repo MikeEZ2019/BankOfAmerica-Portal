@@ -54,7 +54,15 @@
   					<th>Submission Date</th>
   					<th>Last Updated</th>
   				</tr>
-
+  				{% for application in applications %}
+  				<tr>
+  					<td>{{ application.application_file_id }}</td>
+  					<td>{{ application.status }}</td>
+  					<td>{{ application.created_at }}</td>
+  					<td>{{ application.updated_at }}</td>
+  				</tr>
+  				{% endfor %}
+  			</table>
 		</div>
 		<script type="text/javascript">
 			function openCity(evt, cityName) {

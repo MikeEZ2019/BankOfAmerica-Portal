@@ -5,18 +5,19 @@ from django.utils import timezone
 # Create your models here.
 
 class UserProfile(models.Model):
+    profile_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, unique=True, on_delete='CASCADE')
     box_user_id = models.CharField(max_length=40, blank=True)
     box_folder_id = models.CharField(max_length=40, blank=True)
     
-    def create_user_profile(sender, instance, created, **kwargs):
-        logging.debug("Trying to create the user profile")
-        if created:
-            UserProfile.objects.create(user=instance)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     logging.debug("Trying to create the user profile")
+    #     if created:
+    #         UserProfile.objects.create(user=instance)
 
 class LoanApplication(models.Model):
 	application_id = models.AutoField(primary_key=True)
-	applicant = models.ForeignKey(User, unique=True, on_delete='CASCADE')
+	applicant = models.ForeignKey(User, on_delete='CASCADE')
 	application_file_id = models.CharField(max_length=20)
 	SUBMITTED = 'SUB'
 	PENDING = 'PEND'
