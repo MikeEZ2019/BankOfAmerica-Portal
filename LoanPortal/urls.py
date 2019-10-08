@@ -23,6 +23,7 @@ urlpatterns = [
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/home/', portal_views.home),
+    path('accounts/home/applications', portal_views.upload_file, name='upload_file')
     #path('login/$','django.contrib.auth.views.login', {'template_name': '/index.html'}),
     # path('accounts/register/',
     #     RegistrationView.as_view(success_url='home/'),

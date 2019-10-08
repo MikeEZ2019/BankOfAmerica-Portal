@@ -9,7 +9,7 @@ body {
  	top:0px;
  	width: 100%;
  	padding-bottom: 10px;
- 	padding-left: 0px;
+ 	padding-left: 40px;
  	margin-left: 0px;
  	left: 0;
  }
@@ -17,7 +17,7 @@ body {
 	font-size: 10px;
 	padding-top: 2px
 	padding-bottom: 2px;
-	margin-left: 0px;
+	margin-left: px;
 }
 
 .header_bar li{
@@ -28,7 +28,7 @@ body {
 	font-family: 'Muli', sans-serif;
 	font-weight: lighter;
 	font-size: 14px;
-	margin-left: 5px;
+	margin-left: 0px;
 }
 
 .header_bar ul {
@@ -44,8 +44,9 @@ body {
 }
 
 .top-container {
-	width: 100%;
+	width: 95%;
 	height: 125px;
+	/*margin-top: 20px;*/
 
 }
 
@@ -104,6 +105,7 @@ h2 {
     justify-content: center;
 	align-items: center;
 	text-align: center;
+
 }
 
 .login_area form {
@@ -117,7 +119,7 @@ h2 {
 	font-family: 'Muli', sans-serif
 }
 
-input[type=button], input[type=submit], input[type=reset], button {
+input[type=button], input[type=submit], input[type=reset], .login {
   background-color: #D81A36;
   border-color: white;
   border-radius: 2px;
@@ -163,7 +165,7 @@ input[type="password"]{
 
 
 .container{
-	width: 100%;
+	width: 95%;
     height: 300px;
     padding: 0px;
     border: 3px
@@ -204,8 +206,8 @@ input[type="password"]{
 }
 
 .photo-container {
-	/*margin-bottom: 200px;
-	width: 95%;*/
+/*	margin-bottom: 200px;*/
+	width: 95%;
 	display: flex;
 }
 
@@ -258,13 +260,13 @@ input[type="password"]{
     
 }
 
-.left-photo {
-	margin-top: -10px;
+/*.left-photo {
+	height: 400px;
 }
 
 .right-photo {
 	margin-top: -10px;
-}
+}*/
 
 
 .left-info-box p {
@@ -295,9 +297,9 @@ body{
  overflow: hidden;
  display: block;
  position: relative;
- padding-bottom: 15%; /* height of your footer */
- padding-top: 0%;
- margin-top: 0;
+ padding-bottom: 15%;
+ padding-top: 31px; /* height of your footer */
+ padding-left: 40px;
 }
 
 footer {
@@ -308,3 +310,46 @@ footer {
 	bottom: 0;
 	left: 0;
 }
+
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 45%;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tab-content {
+  display: none;
+  padding: 6px 12px;
+  border: 5px solid #000000;
+  border-top: none;
+  width: 45%;
+}
+
+.tab-content h3 {
+	padding-left: 0px;
+}
+
+
+

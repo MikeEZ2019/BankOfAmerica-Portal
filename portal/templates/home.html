@@ -5,69 +5,73 @@
 <div class="main-container">
 	<div class="top-container">
 		<div class="main_logo">
-			<h1>Bank of America <img src="{% static "images/logo.png" %}"></h1>
+			<h1>Bank of America <img src="{% static "images/logo.png" %}"> LoanPortal5000</h1>
 		</div>
 		<div class="search-bar">
 			<input type="text" placeholder="Search..">
 		</div>
 	</div>
-	<ul id="menu">
+<!-- 	<ul id="menu">
 	  <li>Checking</li>
 	  <li>Savings</li>
 	  <li>Credit Cards</li>
 	  <li>Home Loans</li>
 	  <li>Loan Portal</li>
-	</ul> 
-	<h2>Welcome to the new Loan Portal - powered by Box</h2>
+	</ul>  -->
 	{% if user.is_authenticated %}
-    	<p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+    	<p>Welcome, {{ user.get_full_name }}. Thanks for logging in.</p>
 	{% else %}
     	<p>Welcome, new user. Please log in.</p>
 	{% endif %}
-	<!-- </div> -->
 
-	<div class="container">
-
-		<div class="process_walkthrough">
-			<div class="grid-container">
-				  <div class="grid-item-image"><img src="{% static "images/property.svg" %}" height="75"></div>
-				  <div class="grid-item-image"><img src="{% static "images/zoom.svg" %}" height="75"></div>
-				  <div class="grid-item-image"><img src="{% static "images/earnings.svg" %}" height="75"></div>
-				  <div class="grid-item-description">Submit your application online now. No faxing required.</div>
-				  <div class="grid-item-description">We'll review your application. This process usually takes 48-72 hours.</div>
-				  <div class="grid-item-description">If approved, your loan will be desposited within 24 hours, so you can get back to growing your business.</div>
+		<div class="tab">
+		  <button class="tablinks" onclick="openCity(event, 'loan-form')">New Application</button>
+		  <button class="tablinks" onclick="openCity(event, 'history')" id="defaultOpen">History</button>
+		</div>
+		<div id="loan-form" class="tab-content">
+			<h3>New Application Form</h3>
+			<p>Fill out the required information to begin the approval process.</p>
+			<div class="form-body">
+				<form enctype="multipart/form-data" method="post" action="">
+<!-- 					<input type="text" name="first-name" placeholder="First Name"><br>
+					<input type="text" name="last-name" placeholder="Last Name"><br>
+					<input type="button" id="upload" name="file-upload"> -->
+					{% csrf_token %}
+					{{ form.as_p }}
+					{{ form.errors }}
+					{{ form.non_field_errors }}
+					<button type="submit" value="Post">Submit</button>
+				</form>
 			</div>
 		</div>
-		<div class="login_area">
-			<form method="POST" class="login" action="/login/">
-				{% csrf_token %}
-  				{{ form.as_p }}
-				<input type="text" name="username" placeholder="Online ID"><br>
-				<input type="text" name="password" placeholder="Password"><br>
-<!-- 				<input type="checkbox" name="save" value="save_id">Save Online ID<br> -->
-				<input type="submit" value="Submit">
-				<p>Forgot ID/Password?</p>
-				<p>Create an Account</p>
-			</form>
+		<div id="history" class="tab-content">
+  			<h3>Application History</h3>
+  			<p>Paris is the capital of France.</p>
 		</div>
-	</div>
-	<br>
-	<div class="photo-container">
-		<div class="left-photo">
-			<div class="left-info-box">
-				<h3>Apply Quickly. No More Faxes!</h3>
-				<p>Box's cloud content management tools handle your data simply and securely.</p>
-			</div>	
-			<img src="{% static "images/stock_laptop.jpg" %}" width="100%">
-		</div>
-		<div class="right-photo">
-			<div class="right-info-box">
-				<h3>Track Your Status Along the Way</h3>
-				<p>We will provide updates from start to finish to make sure you're informed.</p>
-			</div>
-			<img src="{% static "images/coffee-shop.jpg" %}" width="100%">
-		</div>
+		<script type="text/javascript">
+			function openCity(evt, cityName) {
+			  var i, tabcontent, tablinks;
+
+			  tabcontent = document.getElementsByClassName("tab-content");
+			  for (i = 0; i < tabcontent.length; i++) {
+			    tabcontent[i].style.display = "none";
+			  }
+
+			  // Get all elements with class="tablinks" and remove the class "active"
+			  tablinks = document.getElementsByClassName("tablinks");
+			  for (i = 0; i < tablinks.length; i++) {
+			    tablinks[i].className = tablinks[i].className.replace(" active", "");
+			  }
+
+			  // Show the current tab, and add an "active" class to the button that opened the tab
+			  document.getElementById(cityName).style.display = "block";
+			  evt.currentTarget.className += " active";
+			}
+		document.getElementById("defaultOpen").click();
+		</script>
+
+		<!-- Tab links -->
+
 	</div>
 	<footer></footer>
-</div>
 {% endblock %}
