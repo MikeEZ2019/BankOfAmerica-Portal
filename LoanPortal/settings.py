@@ -120,3 +120,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/accounts/home/applications'
+AUTH_PROFILE_MODULE = "account.UserProfile"

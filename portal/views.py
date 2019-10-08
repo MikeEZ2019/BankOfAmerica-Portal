@@ -37,11 +37,11 @@ def handle_uploaded_file(f, first_name, last_name):
 	auth = OAuth2(
 	    client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
 	    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-	    access_token='MCEuntkfH0UgnUPe6eUSg9KD1GSlffmr',
+	    access_token='mAqSFAATk20JPywPtNgx2r66aysgxaSl',
 	)
 	client = Client(auth)
 	stream = f
-	file_name = last_name + ", " + first_name + "Loan Application.pdf"
+	file_name = last_name + ", " + first_name + " Loan Application.pdf"
 	user = client.user().get()
 	subfolder = client.folder('0').create_subfolder('My Stuff' + str(random.randint(1,100001)))
 	folder_id = subfolder.id
