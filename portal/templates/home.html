@@ -47,15 +47,15 @@
 		<div id="history" class="tab-content">
   			<h3>Application History</h3>
   			<p>Here is an overview of applications you've submitted.</p>
-  			<table class="application_table">
-  				<tr>
+  			<table class="application-table">
+  				<tr class="table-header">
   					<th>Application ID</th>
   					<th>Status</th>
   					<th>Submission Date</th>
   					<th>Last Updated</th>
   				</tr>
   				{% for application in applications %}
-  				<tr>
+  				<tr class="table-row">
   					<td>{{ application.application_file_id }}</td>
   					<td>{{ application.status }}</td>
   					<td>{{ application.created_at }}</td>

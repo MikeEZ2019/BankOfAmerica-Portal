@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+{% load staticfiles %}
+{% block title %}Account - {{ block.super }}{% endblock %}
+{% block content %}
+<h1>Application created successfully!</h1>
+
+<script>
+    function redirect(){
+       window.location.href = "http://localhost:8000/accounts/home";
+    }
+
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endblock %}

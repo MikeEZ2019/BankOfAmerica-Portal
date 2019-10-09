@@ -21,6 +21,9 @@ def home(request):
     return render(request, 'home.html')
     logging.debug('We are going to load the page for', user)
 
+def success(request):
+	return render(request, 'success.html')
+
 class HomeView(TemplateView):
 	template_name = 'home.html'
 
@@ -34,7 +37,8 @@ class HomeView(TemplateView):
 			if form.is_valid():
 				self.handle_uploaded_file(request.FILES['file'], user)
 				logging.debug("This is good", form)
-				return HttpResponseRedirect('/success/url')
+				messages.success(request, 'File Uploaded')
+				return HttpResponseRedirect('/success/')
 			else:
 				logging.debug("invalid", form.errors)
 				messages.error(request, "Error", form.errors)
@@ -43,13 +47,11 @@ class HomeView(TemplateView):
 			form = UploadFileForm()
 		return render(request, 'home.html', {'form': form})
 
-	# def get_context_data(self, **kwargs):
-	# 	context = super(HomeView, self).get_context_data(**kwargs)
-	# 	return context
+	#Query list of applications submitted by current_user.
 	def get(self, request):
 		form = UploadFileForm()
 		#self.create_box_app_user(request.user)
-		applications = LoanApplication.objects.all()
+		applications = LoanApplication.objects.filter(applicant_id=request.user)
 		logging.debug("Here are the apps", applications)
 		args = {'form': form, 'applications': applications}
 		return render(request, self.template_name, args)
@@ -62,7 +64,7 @@ class HomeView(TemplateView):
 		auth = OAuth2(
 		    client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
 		    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-		    access_token='v6AvICUI9BdNTU7po8gjxi5GQfHFDWIF',
+		    access_token='dMH67C0BIKsamA6Z6ErZFPDGAh2u8Fdg',
 		)
 		client = Client(auth)
 		stream = f

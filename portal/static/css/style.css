@@ -315,7 +315,7 @@ footer {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  width: 45%;
+  width: 70%;
 }
 
 .tab button {
@@ -341,14 +341,28 @@ footer {
 /* Style the tab content */
 .tab-content {
   display: none;
-  padding: 6px 12px;
   border: 5px solid #000000;
   border-top: none;
-  width: 45%;
+  width: 70%;
 }
 
 .tab-content h3 {
 	padding-left: 0px;
+}
+
+.application-table {
+	border: 1px solid black;
+	width: 100%;
+}
+
+.table-header, tr, th{
+	height: 50px;
+	border-bottom: 1px solid black
+}
+
+.table-row, td {
+	text-align: center;
+	border-bottom: 1px solid black;
 }
 
 
