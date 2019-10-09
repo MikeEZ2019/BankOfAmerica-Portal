@@ -26,7 +26,8 @@ SECRET_KEY = 'd0h*%8&rru+ldo%%zxlo965_r^y(cis4r8*d6iikzgwc)mx(x1'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-'boa-loan-portal.herokuapp.com']
+'boa-loan-portal.herokuapp.com',
+'localhost']
 
 
 # Application definition
@@ -123,5 +124,5 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 #STATIC_ROOT = 'static'
-LOGIN_REDIRECT_URL = '/accounts/home/applications'
+LOGIN_REDIRECT_URL = '/accounts/home'
 AUTH_PROFILE_MODULE = "account.UserProfile"
