@@ -1,1 +1,1 @@
-web: gunicorn portal.wsgi
+web: gunicorn portal.wsgi --log-file -
