@@ -25,7 +25,8 @@ SECRET_KEY = 'd0h*%8&rru+ldo%%zxlo965_r^y(cis4r8*d6iikzgwc)mx(x1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+'boa-loan-portal.herokuapp.com']
 
 
 # Application definition
