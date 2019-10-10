@@ -22,6 +22,7 @@ def home(request):
     return render(request, 'home.html')
     logging.debug('We are going to load the page for', user)
 
+#direct user to success message page after a succesful upload. 
 def success(request):
 	return render(request, 'success.html')
 

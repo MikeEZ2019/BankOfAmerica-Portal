@@ -30,3 +30,9 @@ class LoanApplication(models.Model):
 
 	def create_application(self): 
 		self.created_at = timezone.now()
+
+	def set_readable_status(self):
+		if status == 'SUB':
+			return "Submitted"
+		else:
+			return "Oops"

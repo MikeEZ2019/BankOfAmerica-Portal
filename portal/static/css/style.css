@@ -12,6 +12,7 @@ body {
  	padding-left: 40px;
  	margin-left: 0px;
  	left: 0;
+ 	display: inline-block;
  }
 .header_bar p {
 	font-size: 10px;
@@ -23,7 +24,7 @@ body {
 .header_bar li{
 	display: inline;
 	padding-right: 20px;
-	padding-bottom: 5px;
+	padding-bottom: 2px;
 	padding-top: 5px;
 	font-family: 'Muli', sans-serif;
 	font-weight: lighter;
@@ -35,19 +36,34 @@ body {
 	padding-bottom: 5px;
 }
 
-.search-bar {
+.top-right-menu {
 	float: right;
-	width: 20%;
-	height: 20px;
-	margin-top: 40px;
-	border-color: black;
+}
+
+.top-left-menu {
+	width: 80%
+}
+
+.search-bar input[type=text]{
+	float: right;
+	width: 15%;
+	height: 30px;
+	margin-top: 50px;
+	border: 1px solid black;
 }
 
 .top-container {
 	width: 95%;
 	height: 125px;
-	/*margin-top: 20px;*/
+	margin-top: 20px;
+}
 
+.top-container p {
+	color: #14234C;
+	float: right;
+	width: 20%;
+	height: 20px;
+	border-color: black;
 }
 
 .main_logo {
@@ -132,7 +148,7 @@ input[type=button], input[type=submit], input[type=reset], .login {
   width: 80%;
 }
 
-input[type=text]{
+.login-form input[type=text]{
 	width: 80%;
 	height: 25px;
 	padding-top: 2%;
@@ -215,7 +231,7 @@ input[type="password"]{
 } 
 
 .footer-grid-item ul {
-	list-style-type: none
+	list-style-type: none;
 }
 
 .footer-grid-item li {
@@ -343,8 +359,7 @@ body{
  overflow: hidden;
  display: block;
  position: relative;
- padding-bottom: 15%;
- padding-top: 31px; /* height of your footer */
+ padding-bottom: 15%; /* height of your footer */
  padding-left: 40px;
 }
 
@@ -361,7 +376,8 @@ footer {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  width: 70%;
+  width: 60%;
+  float: left;
 }
 
 .tab button {
@@ -387,29 +403,100 @@ footer {
 /* Style the tab content */
 .tab-content {
   display: none;
-  border: 5px solid #000000;
-  border-top: none;
-  width: 70%;
+/*  border: 5px solid #000000;
+  border-top: none;*/
+  margin-right: 0px;
+  width: 60%;
 }
 
-.tab-content h3 {
+.tab-content p {
+	font-family: "Muli", sans-serif;
+	font-weight: lighter;
+	font-size: 14px;
+}
+
+.tab-content h3{
 	padding-left: 0px;
 }
+
 
 .application-table {
 	border: 1px solid black;
 	width: 100%;
 }
 
-.table-header, tr, th{
+.table-header th{
 	height: 50px;
-	border-bottom: 1px solid black
+	border-bottom: 1px solid #14234C;
+	font-family: "Muli", sans-serif;
+	color: #14234C;
 }
 
-.table-row, td {
+.table-row, td, tr {
 	text-align: center;
-	border-bottom: 2px solid black;
+	border-bottom: 1px solid #14234C;
+	font-family: "Muli", sans-serif;
+	font-weight: lighter;
+	height: 30px;
+}
+
+.file-submission-button {
+  background-color: #D81A36;
+  border-color: white;
+  border-radius: 2px;
+  color: white;
+  padding: 0px 0px;
+  text-decoration: none;
+  margin-top: 6%;
+  cursor: pointer;
+  height: 40px;
+  width: 80%;
 }
 
 
+.welcome-text {
+	color: #D81A36;
+	font-family: "Muli", sans-serif;
+	font-weight: lighter;
+}
+
+.info-container {
+	float: right;
+	height: 100%;
+	background: #F1f1f1;
+	width: 25%;
+	vertical-align: top;
+}
+
+.info-table {
+	font-family: "Muli", sans-serif;
+	color: #14234C;
+	font-weight: bolder;
+	top: 0;
+	text-align: center;
+	display: inline-block;
+}
+
+.info-table {
+	list-style-type: none;
+}
+
+.info-list {
+	text-align: center;
+	list-style-type: none;
+}
+
+.info-list li p {
+	font-family: "Muli", sans-serif;
+	text-decoration: underline;
+	padding: 20px;
+	border-bottom: 1px #A9A9A9 solid;
+}
+
+.mid-container {
+	width: 95%;
+    height: 100%;
+    padding: 0px;
+    border: 3px;
+}
 

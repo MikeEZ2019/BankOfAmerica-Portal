@@ -1,20 +1,28 @@
 {% load staticfiles %}
-<!doctype html>
 <!DOCTYPE html>
 <html>
 <head>
 	<div class="header_bar">
-		<ul>
-			<li>Personal</li>
-			<li>Wealth Management</li>
-			<li>Small Business</li>
-			<li>About Us</li>
-		</ul>
+		<div class="top-left-menu">
+			<ul>
+				<li>Personal</li>
+				<li>Wealth Management</li>
+				<li>Small Business</li>
+				<li>About Us</li>
+			</ul>
+		</div>
+		<div class="top-right-menu">
+			{% if user.is_authenticated %}
+    			<p>Logout</p>
+			{% else %}
+    			<p>Login</p>
+			{% endif %}
+		</div>
 	</div>
 
 
 	<title>
-		{% block title %}My Hello Web App Project{% endblock %}
+		{% block title %}Loan Advantage Portal{% endblock %}
 	</title>
 	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	{% block header %}{% endblock %}

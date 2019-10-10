@@ -5,10 +5,10 @@
 <div class="main-container">
 	<div class="top-container">
 		<div class="main_logo">
-			<h1>Bank of America <img src="{% static "images/logo.png" %}"> LoanPortal5000</h1>
+			<h1>Bank of America <img src="{% static "images/logo.png" %}"> Loan Advantage</h1>
 		</div>
 		<div class="search-bar">
-			<input type="text" placeholder="Search..">
+			<input type="text" class= "search" placeholder="Search...">
 		</div>
 	</div>
 <!-- 	<ul id="menu">
@@ -18,19 +18,22 @@
 	  <li>Home Loans</li>
 	  <li>Loan Portal</li>
 	</ul>  -->
+	<div class="welcome-text">
 	{% if user.is_authenticated %}
-    	<p>Welcome, {{ user.get_full_name }}. Thanks for logging in.</p>
+    	<p>Welcome, {{ user.get_full_name }}. The Loan Advantage Portal is the new home of Bank of America Loans.</p>
 	{% else %}
     	<p>Welcome, new user. Please log in.</p>
 	{% endif %}
-
+	</div>
+	<div class="mid-container">
 		<div class="tab">
 		  <button class="tablinks" onclick="openCity(event, 'loan-form')">New Application</button>
 		  <button class="tablinks" onclick="openCity(event, 'history')" id="defaultOpen">History</button>
 		</div>
+		<br>
 		<div id="loan-form" class="tab-content">
 			<h3>New Application Form</h3>
-			<p>Fill out the required information to begin the approval process.</p>
+			<p>Fill out the required information to begin the approval process. Once your application is submitted, our loan officers will review your application. You can check the status of your application in the <b>History</b> tab.</p><br><br>
 			<div class="form-body">
 				<form enctype="multipart/form-data" method="post" action="">
 <!-- 					<input type="text" name="first-name" placeholder="First Name"><br>
@@ -40,7 +43,7 @@
 					{{ form.as_p }}
 					{{ form.errors }}
 					{{ form.non_field_errors }}
-					<button type="submit" value="Post">Submit</button>
+					<button type="submit" class="file-submission-button" value="Post">Submit</button>
 				</form>
 			</div>
 		</div>
@@ -57,13 +60,34 @@
   				{% for application in applications %}
   				<tr class="table-row">
   					<td>{{ application.application_file_id }}</td>
-  					<td>{{ application.status }}</td>
+  					{% if application.status == "SUB" %}
+  						<td>Submitted</td>
+  						
+  					{% elif application.status == "PEND" %}
+  						<td>Pending</td>
+  					{% elif application.status == "APP" %}
+  						<td>Approved</td>
+  					{% else %}
+  						<td>Complete</td>
+  					{% endif %}
+
   					<td>{{ application.created_at }}</td>
   					<td>{{ application.updated_at }}</td>
   				</tr>
   				{% endfor %}
   			</table>
 		</div>
+		<div class="info-container">
+			<ul class="info-list">
+			<li><h3>News and Resources</h3></li>
+			<li><p>Our Lending Methodology: Capitalism and Lending in the Technological Age</p></li>
+			<li><p>Commitment to Lending in Low-Income Communities</p></li>
+			<li><p>Bank of America Joins AARP to Help Fight Financial Exploitation</p></li>
+			<li><p>Bank of America Named Winner of Top Companies for Women Technologists Program</p></li>
+			<li><p>Bank of America’s Unique Approach to Loyalty Rewards Translates Into Record Client Satisfaction and Retention</p></li>
+			</ul>
+		</div>
+
 		<script type="text/javascript">
 			function openCity(evt, cityName) {
 			  var i, tabcontent, tablinks;
@@ -80,14 +104,15 @@
 			  }
 
 			  // Show the current tab, and add an "active" class to the button that opened the tab
-			  document.getElementById(cityName).style.display = "block";
+			  document.getElementById(cityName).style.display = "inline-block";
 			  evt.currentTarget.className += " active";
 			}
 		document.getElementById("defaultOpen").click();
 		</script>
 
 		<!-- Tab links -->
+			</div>
+</div>
 
-	</div>
-	<footer></footer>
+	
 {% endblock %}
