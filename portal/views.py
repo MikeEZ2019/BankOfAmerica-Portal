@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
