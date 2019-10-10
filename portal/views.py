@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from portal.forms import UploadFileForm
 from portal.models import LoanApplication, UserProfile
 from boxsdk import OAuth2, Client, JWTAuth
+from django.views.decorators.csrf import csrf_exempt
 import logging
 import random
 from django.contrib import messages
@@ -24,10 +25,10 @@ def home(request):
 def success(request):
 	return render(request, 'success.html')
 
-
+@csrf_exempt
 def handle_webhook(request):
 	logging.debug("Webhook received")
-	return
+	return HttpResponse(status=200)
 
 
 class HomeView(TemplateView):
@@ -64,7 +65,6 @@ class HomeView(TemplateView):
 
 
 	#Upload the file to Box and create the Loan Application object. 
-
 	def handle_uploaded_file(self, f, user):
 
 		auth = OAuth2(
@@ -97,7 +97,7 @@ class HomeView(TemplateView):
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
 		#https://enk477phc85mn.x.pipedream.net
-		webhook = client.create_webhook(file, ['FILE.PREVIEWED'], 'https://boa-loan-portal.herokuapp.com/callback')
+		webhook = client.create_webhook(file, ['FILE.PREVIEWED'], 'https://boa-loan-portal.herokuapp.com/callback/')
 		print('Webhook ID is {0} and the address is {1}'.format(webhook.id, webhook.address))
 
 	# def create_box_app_user(self, user):
