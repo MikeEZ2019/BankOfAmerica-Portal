@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		<div class="login_area">
-			<form method="POST" class="login" "/login/">
+			<form method="POST" class="login" action="/login/">
 				{% csrf_token %}
   				{{ form.as_p }}
 				<input type="text" name="username" placeholder="Online ID"><br>
