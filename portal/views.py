@@ -7,7 +7,7 @@ from portal.forms import UploadFileForm
 from portal.models import LoanApplication, UserProfile
 from boxsdk import OAuth2, Client, JWTAuth
 from django.views.decorators.csrf import csrf_exempt
-import logging
+import logging, json
 import random
 from django.contrib import messages
 import portal.creds as c
@@ -25,9 +25,13 @@ def home(request):
 def success(request):
 	return render(request, 'success.html')
 
+
+#Handle webhooks for completed tasks. Bug in Task Notification Webhooks since new notification service roll-out. 
 @csrf_exempt
 def handle_webhook(request):
 	logging.debug("Webhook received", request.body)
+	jsondata = request.body
+	data = json.loads(data)
 	return HttpResponse(status=200)
 
 
@@ -58,7 +62,7 @@ class HomeView(TemplateView):
 	def get(self, request):
 		form = UploadFileForm()
 		#self.create_box_app_user(request.user)
-		applications = LoanApplication.objects.filter(applicant_id=request.user)
+		applications = LoanApplication.objects.filter(applicant_id=request.user).order_by('-updated_at')[:10]
 		logging.debug("Here are the apps", applications)
 		args = {'form': form, 'applications': applications}
 		return render(request, self.template_name, args)
@@ -97,7 +101,8 @@ class HomeView(TemplateView):
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
 		#https://enk477phc85mn.x.pipedream.net
-		webhook = client.create_webhook(file, ['FILE.PREVIEWED'], 'https://boa-loan-portal.herokuapp.com/callback/')
+		#https://boa-loan-portal.herokuapp.com/callback/'
+		webhook = client.create_webhook(file, ['FILE.PREVIEWED', 'TASK_ASSIGNMENT.UPDATED'], 'https://boa-loan-portal.herokuapp.com/callback/' )
 		print('Webhook ID is {0} and the address is {1}'.format(webhook.id, webhook.address))
 
 	# def create_box_app_user(self, user):
