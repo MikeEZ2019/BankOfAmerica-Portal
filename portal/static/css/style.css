@@ -201,7 +201,7 @@ input[type="password"]{
   grid-column-gap: 30px;
 /*  justify-content: center;*/
   align-items: center;
-/*  justify-items: center;*/
+  justify-items: center;
   height: 285px;
 }
 
