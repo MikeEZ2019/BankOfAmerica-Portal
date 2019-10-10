@@ -24,6 +24,12 @@ def home(request):
 def success(request):
 	return render(request, 'success.html')
 
+
+def handle_webhook(request):
+	logging.debug("Webhook received")
+	return
+
+
 class HomeView(TemplateView):
 	template_name = 'home.html'
 
@@ -64,7 +70,7 @@ class HomeView(TemplateView):
 		auth = OAuth2(
 		    client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
 		    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-		    access_token='dMH67C0BIKsamA6Z6ErZFPDGAh2u8Fdg',
+		    access_token='agJ6W5GCqjDPrlqwtiGgup62hpyQubsv',
 		)
 		client = Client(auth)
 		stream = f
@@ -89,6 +95,10 @@ class HomeView(TemplateView):
 		logging.debug('File "{0}" uploaded to Box with file ID {1}'.format(new_file.name, new_file.id))
 		new_loan = LoanApplication(applicant=user, application_file_id = new_file.id)
 		new_loan.save()
+		file = client.file(file_id=new_file.id)
+		#https://enk477phc85mn.x.pipedream.net
+		webhook = client.create_webhook(file, ['FILE.PREVIEWED'], 'https://boa-loan-portal.herokuapp.com/callback')
+		print('Webhook ID is {0} and the address is {1}'.format(webhook.id, webhook.address))
 
 	# def create_box_app_user(self, user):
 	# 	sdk = JWTAuth(client_id=c.clientID,
