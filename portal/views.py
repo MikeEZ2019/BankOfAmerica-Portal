@@ -27,7 +27,7 @@ def success(request):
 
 @csrf_exempt
 def handle_webhook(request):
-	logging.debug("Webhook received", request.POST)
+	logging.debug("Webhook received", request.body)
 	return HttpResponse(status=200)
 
 
