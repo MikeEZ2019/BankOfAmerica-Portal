@@ -27,14 +27,37 @@ def success(request):
 	return render(request, 'success.html')
 
 
-#Handle webhooks for completed tasks. Bug in Task Notification Webhooks since new notification service roll-out. 
+#Handle webhooks for completed tasks. Bug in Task Notification Webhooks since new notification service roll-out.
+#Using File Preview as a proxy for demo purposes. Can be updated once COLLAB-1190 is resolved.  
 @csrf_exempt
 def handle_webhook(request):
 	logging.debug("Webhook received", request.body)
 	jsondata = request.body
 	data = json.loads(jsondata)
-	logging.debug(data["source"]["id"], "this is the file id")
+	file_id = data["source"]["id"]
+	update_loan_application_status(file_id)
+
 	return HttpResponse(status=200)
+
+def update_loan_application_status(file):
+	record = LoanApplication.objects.filter(application_file_id=file)
+	#Update Submitted to Pending once a Loan Officer begins review. 
+	if record.status == "SUB":
+		record.status == "PEND"
+		record.save()
+	#Update Pending Applications to Approved. More detail can be added here once task notifications work.
+	#Approve/Reject allows for another step, but not available with FILE.PREVIEW. 
+	elif record.status == "PEND":
+		record.status == "APP"
+		record.save()
+	#Update Approved Records to Completed
+	elif record.status == "APP":
+		record.status == "COMP"
+		record.save()
+	#Exhaustive IF/ELSE to avoid writing to objects when reviewing completed applications. 
+	else:
+		continue
+
 
 
 class HomeView(TemplateView):
