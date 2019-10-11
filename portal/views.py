@@ -45,18 +45,22 @@ def update_loan_application_status(file):
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
 		record.status == "PEND"
+		logging.debug('Record Updated to Pending')
 		record.save()
 	#Update Pending Applications to Approved. More detail can be added here once task notifications work.
 	#Approve/Reject allows for another step, but not available with FILE.PREVIEW. 
 	elif record.status == "PEND":
+		logging.debug('Record updated to Approved')
 		record.status == "APP"
 		record.save()
 	#Update Approved Records to Completed
 	elif record.status == "APP":
 		record.status == "COMP"
+		logging.debug('Record updated to Completed')
 		record.save()
 	#Exhaustive IF/ELSE to avoid writing to objects when reviewing completed applications. 
 	else:
+		logging.debug('No record found')
 		return
 
 
