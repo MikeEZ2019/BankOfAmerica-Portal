@@ -17,7 +17,7 @@ from django.utils import timezone
 auth = OAuth2(
     client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
     client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-    access_token='zb10a5bzaRiz8V9UR8tehT2o7KJjTD3S',
+    access_token='BM5RYTZLFoxPahcJlH2yBIAXoU52xuqj',
 )
 client = Client(auth)
 
