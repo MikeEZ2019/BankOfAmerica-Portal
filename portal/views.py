@@ -44,9 +44,9 @@ def update_loan_application_status(file):
 	record = get_object_or_404(LoanApplication, application_file_id=file)
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
-		record.status == "PEND"
+		record.update(status="PEND")
 		logging.debug('Record Updated to Pending')
-		record.save()
+		#record.save()
 		logging.debug('Record Updated to Pending and Saved')
 	#Update Pending Applications to Approved. More detail can be added here once task notifications work.
 	#Approve/Reject allows for another step, but not available with FILE.PREVIEW. 
