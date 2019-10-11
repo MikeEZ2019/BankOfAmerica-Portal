@@ -22,7 +22,13 @@
 	{% if user.is_authenticated %}
     	<p>Welcome, {{ user.get_full_name }}. The Loan Advantage Portal is the new home of Bank of America Loans.</p>
 	{% else %}
-    	<p>Welcome, new user. Please log in.</p>
+    	 <script>
+		    function redirect(){
+		       window.location.href = "https://boa-loan-portal.herokuapp.com/accounts/home/";
+		    }
+
+		    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+		</script>
 	{% endif %}
 	</div>
 	<div class="mid-container">

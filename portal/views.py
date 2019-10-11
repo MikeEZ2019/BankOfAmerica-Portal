@@ -13,6 +13,14 @@ from django.contrib import messages
 import portal.creds as c
 from django.utils import timezone
 
+
+auth = OAuth2(
+    client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
+    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
+    access_token='B0E8Dl68WsaPIJIXRyCF71sXtWNNsaNg',
+)
+client = Client(auth)
+
 # Create your views here.
 def index(request):
 	return render(request, 'index.html')
@@ -45,6 +53,7 @@ def update_loan_application_status(file):
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
 		record.status = "PEND"
+		create_and_assign_task("Complete initial review of the application", file)
 		logging.debug('Record Updated to {0}.'.format(record.status))
 		record.save()
 		logging.debug('Record Updated to Pending and Saved')
@@ -52,12 +61,14 @@ def update_loan_application_status(file):
 	#Approve/Reject allows for another step, but not available with FILE.PREVIEW. 
 	elif record.status == "PEND":
 		logging.debug('Record updated to Approved')
+		create_and_assign_task("Approve or reject the application", file)
 		record.status = "APP"
 		record.save()
 	#Update Approved Records to Completed
 	elif record.status == "APP":
 		record.status = "COMP"
 		logging.debug('Record updated to Completed')
+		create_and_assign_task("Move application to completed/closed status", file)
 		record.save()
 	#Exhaustive IF/ELSE to avoid writing to objects when reviewing completed applications. 
 	else:
@@ -102,12 +113,7 @@ class HomeView(TemplateView):
 	#Upload the file to Box and create the Loan Application object. 
 	def handle_uploaded_file(self, f, user):
 
-		auth = OAuth2(
-		    client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
-		    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-		    access_token='B0E8Dl68WsaPIJIXRyCF71sXtWNNsaNg',
-		)
-		client = Client(auth)
+
 		stream = f
 		user_id_number = user.id
 
@@ -132,28 +138,24 @@ class HomeView(TemplateView):
 		logging.debug('Application created with file id {0} and record {1}'.format(new_file.id, new_loan))
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
+		create_and_assign_task("Begin review of new application", file)
 		#https://enk477phc85mn.x.pipedream.net
 		#https://boa-loan-portal.herokuapp.com/callback/'
 		webhook = client.create_webhook(file, ['FILE.PREVIEWED', 'TASK_ASSIGNMENT.UPDATED'], 'https://boa-loan-portal.herokuapp.com/callback/' )
 		print('Webhook ID is {0} and the address is {1}'.format(webhook.id, webhook.address))
 
-	# def create_box_app_user(self, user):
-	# 	sdk = JWTAuth(client_id=c.clientID,
-	# 	    client_secret=c.clientSecret,
-	# 	    enterprise_id=c.enterpriseID,
-	# 	    jwt_key_id=c.jwtKeyID,
-	# 	    rsa_private_key_file_sys_path='private.pem',
-	# 	    rsa_private_key_passphrase=c.rsaPrivateKeyPassphrase)
-	# 	#access_token = auth.authenticate_instance()
-	# 	client = Client(sdk)
-	# 	new_user = client.create_user(user.first_name + " " + user.last_name)
-	# 	logging.debug("New user created: ", new_user, type(new_user))
 
+def create_and_assign_task(message, file):
+		
+		#Create the task on the file.
+		due_at_raw = datetime.now() + timedelta(days=5)
+		due_at = due_at_raw.strftime('%Y-%m-%dT%H:00:00+00:00')
+		task = client.file(file_id=file).create_task(message, due_at)
+		print('Task message is {0} and it is due at {1}'.format(task.message, task.due_at))
 
-	# def get_loan_applications(self, **kwargs):
-	# 	form = UploadFileForm()
-	# 	applications = LoanApplications.objects.all()
-	# 	logging.debug(applications)
-	# 	return render(request, 'home.html', {'form': form})
+		#Assign the task
+		user = '10240911034'
+		assignment = client.task(task_id=str(task.id)).assign(user)
+
 
 
