@@ -123,6 +123,7 @@ class HomeView(TemplateView):
 		new_file = client.folder(subfolder_id).upload_stream(f, file_name)
 		logging.debug('File "{0}" uploaded to Box with file ID {1}'.format(new_file.name, new_file.id))
 		new_loan = LoanApplication(applicant=user, application_file_id = new_file.id)
+		logging.debug('Application created with file id {0}'.format(new_file.id))
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
 		#https://enk477phc85mn.x.pipedream.net
