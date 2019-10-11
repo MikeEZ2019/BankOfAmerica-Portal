@@ -101,6 +101,7 @@ class HomeView(TemplateView):
 		return render(request, 'home.html', {'form': form})
 
 	#Query list of applications submitted by current_user.
+	@login_required(login_url='/login')
 	def get(self, request):
 		form = UploadFileForm()
 		#self.create_box_app_user(request.user)
