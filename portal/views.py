@@ -25,7 +25,7 @@ client = Client(auth)
 def index(request):
 	return render(request, 'index.html')
 
-@login_required
+@login_required(login_url='/login')
 def home(request):
     return render(request, 'home.html')
     logging.debug('We are going to load the page for', user)
