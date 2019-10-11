@@ -7,8 +7,9 @@ from portal.forms import UploadFileForm
 from portal.models import LoanApplication, UserProfile
 from boxsdk import OAuth2, Client, JWTAuth
 from django.views.decorators.csrf import csrf_exempt
-import logging, json, datetime
+import logging, json
 import random
+from datetime import datetime, timedelta
 from django.contrib import messages
 import portal.creds as c
 from django.utils import timezone
