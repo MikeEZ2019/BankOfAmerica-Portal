@@ -54,9 +54,9 @@ def update_loan_application_status(file):
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
 		record.status = "PEND"
-		create_and_assign_task("Complete initial review of the application", file)
 		logging.debug('Record Updated to {0}.'.format(record.status))
 		record.save()
+		create_and_assign_task("Complete initial review of the application", file)
 		logging.debug('Record Updated to Pending and Saved')
 	#Update Pending Applications to Approved. More detail can be added here once task notifications work.
 	#Approve/Reject allows for another step, but not available with FILE.PREVIEW. 
@@ -120,7 +120,7 @@ class HomeView(TemplateView):
 
 		file_name = user.last_name + ", " + user.first_name + " - " + str(timezone.now()) + " - Loan Application.pdf"
 
-		logging.debug("the user is ", user.id, user_id_number )
+		logging.debug("the user is ", user.id, user_id_number)
 
 		if UserProfile.objects.filter(user_id=user.id).count() != 0:
 			user_profile = UserProfile.objects.filter(user_id=user.id)[0]
@@ -139,7 +139,8 @@ class HomeView(TemplateView):
 		logging.debug('Application created with file id {0} and record {1}'.format(new_file.id, new_loan))
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
-		create_and_assign_task("Begin review of new application", file)
+		logging.debug(file)
+		create_and_assign_task("Begin review of new application", new_file.id)
 		#https://enk477phc85mn.x.pipedream.net
 		#https://boa-loan-portal.herokuapp.com/callback/'
 		webhook = client.create_webhook(file, ['FILE.PREVIEWED', 'TASK_ASSIGNMENT.UPDATED'], 'https://boa-loan-portal.herokuapp.com/callback/' )
@@ -152,11 +153,12 @@ def create_and_assign_task(message, file):
 		due_at_raw = datetime.now() + timedelta(days=5)
 		due_at = due_at_raw.strftime('%Y-%m-%dT%H:00:00+00:00')
 		task = client.file(file_id=file).create_task(message, due_at)
-		print('Task message is {0} and it is due at {1}'.format(task.message, task.due_at))
+		print('Task {2} message is {0} and it is due at {1}'.format(task.message, task.due_at, task.id))
 
 		#Assign the task
 		user = '10240911034'
-		assignment = client.task(task_id=str(task.id)).assign(user)
+		user_object = client.user(user_id=user)
+		assignment = client.task(task_id=task.id).assign(user_object)
 
 
 
