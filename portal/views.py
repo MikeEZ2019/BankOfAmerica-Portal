@@ -56,7 +56,7 @@ def update_loan_application_status(file):
 		record.save()
 	#Exhaustive IF/ELSE to avoid writing to objects when reviewing completed applications. 
 	else:
-		continue
+		return
 
 
 
