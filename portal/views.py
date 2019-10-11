@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import TemplateView
 from django.urls import reverse
@@ -35,12 +35,13 @@ def handle_webhook(request):
 	jsondata = request.body
 	data = json.loads(jsondata)
 	file_id = data["source"]["id"]
+	logging.debug("we are going to get a record with file id: {0}".format(file_id))
 	update_loan_application_status(file_id)
 
 	return HttpResponse(status=200)
 
 def update_loan_application_status(file):
-	record = LoanApplication.objects.filter(application_file_id=file)[0]
+	record = get_object_or_404(LoanApplication, application_file_id=file)
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
 		record.status == "PEND"
@@ -72,7 +73,7 @@ class HomeView(TemplateView):
 			logging.debug(request, request.POST, 'now', request.FILES)
 			if form.is_valid():
 				self.handle_uploaded_file(request.FILES['Application_file'], user)
-				logging.debug("This is good", form)
+				logging.debug("This is good")
 				messages.success(request, 'File Uploaded')
 				return HttpResponseRedirect('/success/')
 			else:
@@ -99,7 +100,7 @@ class HomeView(TemplateView):
 		auth = OAuth2(
 		    client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
 		    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-		    access_token='IuRR76pEg4BkhjBH19YMa175YSMBd7gv',
+		    access_token='B0E8Dl68WsaPIJIXRyCF71sXtWNNsaNg',
 		)
 		client = Client(auth)
 		stream = f
@@ -122,8 +123,8 @@ class HomeView(TemplateView):
 		
 		new_file = client.folder(subfolder_id).upload_stream(f, file_name)
 		logging.debug('File "{0}" uploaded to Box with file ID {1}'.format(new_file.name, new_file.id))
-		new_loan = LoanApplication(applicant=user, application_file_id = new_file.id)
-		logging.debug('Application created with file id {0}'.format(new_file.id))
+		new_loan = LoanApplication.objects.create(applicant=user, application_file_id=new_file.id)
+		logging.debug('Application created with file id {0} and record {1}'.format(new_file.id, new_loan))
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
 		#https://enk477phc85mn.x.pipedream.net

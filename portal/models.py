@@ -31,6 +31,16 @@ class LoanApplication(models.Model):
 	def create_application(self): 
 		self.created_at = timezone.now()
 
+	def create(self, **kwargs):
+		"""
+		Creates a new object with the given kwargs, saving it to the database
+		and returning the created object.
+		"""
+		obj = self.model(**kwargs)
+		self._for_write = True
+		obj.save(force_insert=True, using=self.db)
+		return obj
+
 	def set_readable_status(self):
 		if status == 'SUB':
 			return "Submitted"
