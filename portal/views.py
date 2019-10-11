@@ -40,7 +40,7 @@ def handle_webhook(request):
 	return HttpResponse(status=200)
 
 def update_loan_application_status(file):
-	record = LoanApplication.objects.filter(application_file_id=file)
+	record = LoanApplication.objects.filter(application_file_id=file)[0]
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
 		record.status == "PEND"
