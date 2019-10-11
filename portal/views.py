@@ -32,7 +32,8 @@ def success(request):
 def handle_webhook(request):
 	logging.debug("Webhook received", request.body)
 	jsondata = request.body
-	data = json.loads(data)
+	data = json.loads(jsondata)
+	logging.debug(data["source"]["id"], "this is the file id")
 	return HttpResponse(status=200)
 
 
