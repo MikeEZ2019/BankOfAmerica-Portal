@@ -44,7 +44,7 @@ def update_loan_application_status(file):
 	record = get_object_or_404(LoanApplication, application_file_id=file)
 	#Update Submitted to Pending once a Loan Officer begins review. 
 	if record.status == "SUB":
-
+		record.status = "PEND"
 		logging.debug('Record Updated to {0}.'.format(record.status))
 		record.save()
 		logging.debug('Record Updated to Pending and Saved')
@@ -52,11 +52,11 @@ def update_loan_application_status(file):
 	#Approve/Reject allows for another step, but not available with FILE.PREVIEW. 
 	elif record.status == "PEND":
 		logging.debug('Record updated to Approved')
-		record.status == "APP"
+		record.status = "APP"
 		record.save()
 	#Update Approved Records to Completed
 	elif record.status == "APP":
-		record.status == "COMP"
+		record.status = "COMP"
 		logging.debug('Record updated to Completed')
 		record.save()
 	#Exhaustive IF/ELSE to avoid writing to objects when reviewing completed applications. 
