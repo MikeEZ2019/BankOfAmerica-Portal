@@ -503,3 +503,30 @@ footer {
     border: 3px;
 }
 
+.success-message {
+	display: inline-block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 800px;
+    height: 400px;
+    /*margin: auto;*/
+    float: none;
+    text-align: center;
+    margin-left: 400px;
+    margin-right: 400px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding-bottom: 20%;
+    /*background-color: #f3f3f3;"*/
+}
+
+.success-message h1 {
+	float: none;
+}
+
+.success-message p {
+	font-family: "Muli", sans-serif
+}
