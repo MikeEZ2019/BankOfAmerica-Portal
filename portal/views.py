@@ -130,7 +130,7 @@ class HomeView(TemplateView):
 			logging.debug("working with", user_profile)
 			subfolder_id = user_profile.box_folder_id
 		else:
-			subfolder = client.folder('0').create_subfolder('My Stuff' + str(random.randint(1,100001)))
+			subfolder = client.folder('0').create_subfolder(user.last_name + ',' + user.first_name + " - Applications")
 			subfolder_id = subfolder.id
 			new_user_profile = UserProfile(user=user, box_folder_id=subfolder.id)
 			new_user_profile.save()
