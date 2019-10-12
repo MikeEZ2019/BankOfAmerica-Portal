@@ -103,12 +103,15 @@ class HomeView(TemplateView):
 
 	#Query list of applications submitted by current_user.
 	def get(self, request):
-		form = UploadFileForm()
-		#self.create_box_app_user(request.user)
-		applications = LoanApplication.objects.filter(applicant_id=request.user).order_by('-updated_at')[:10]
-		logging.debug("Here are the apps", applications)
-		args = {'form': form, 'applications': applications}
-		return render(request, self.template_name, args)
+		if request.user.is_authenticated:
+			form = UploadFileForm()
+			applications = LoanApplication.objects.filter(applicant_id=request.user).order_by('-updated_at')[:10]
+			logging.debug("Here are the apps", applications)
+			args = {'form': form, 'applications': applications}
+			return render(request, self.template_name, args)
+		else:
+			logging.debug("User not authenticated")
+			return HttpResponseRedirect('/login/')
 
 
 	#Upload the file to Box and create the Loan Application object. 
