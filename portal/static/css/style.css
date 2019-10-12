@@ -4,7 +4,7 @@ body {
 
 .header_bar {
 	background-color: #F2F2F2;
-	height: 20px;
+	height: 40px;
 	position:absolute;
  	top:0px;
  	width: 100%;
@@ -391,6 +391,7 @@ footer {
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
+  width: 30%;
 }
 
 /* Change background color of buttons on hover */
@@ -453,7 +454,7 @@ footer {
   margin-top: 6%;
   cursor: pointer;
   height: 40px;
-  width: 80%;
+  width: 30%;
 }
 
 
