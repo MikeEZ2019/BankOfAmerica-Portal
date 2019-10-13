@@ -379,7 +379,7 @@ footer {
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  width: 60%;
+  width: 40%;
   float: left;
 }
 
@@ -391,7 +391,9 @@ footer {
   cursor: pointer;
   padding: 14px 16px;
   transition: 0.3s;
-  width: 30%;
+  width: 50%;
+  border-right: 1px;
+  border-color: #FFFFFF
 }
 
 /* Change background color of buttons on hover */
@@ -407,25 +409,28 @@ footer {
 /* Style the tab content */
 .tab-content {
   display: none;
-/*  border: 5px solid #000000;
-  border-top: none;*/
+  border: 1px solid #000000;
+  /*border-top: none;*/
   margin-right: 0px;
   width: 60%;
+  background-color: #F2F2F2;
 }
 
 .tab-content p {
 	font-family: "Muli", sans-serif;
 	font-weight: lighter;
 	font-size: 14px;
+	padding-left: 5px;
 }
 
 .tab-content h3{
-	padding-left: 0px;
+	padding-left: 5px;
 }
 
 
 .application-table {
-	border: 1px solid black;
+	/*border: 1px solid black;*/
+	border-top: none;
 	width: 100%;
 }
 

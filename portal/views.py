@@ -7,7 +7,7 @@ from portal.forms import UploadFileForm
 from portal.models import LoanApplication, UserProfile
 from boxsdk import OAuth2, Client, JWTAuth
 from django.views.decorators.csrf import csrf_exempt
-import logging, json
+import logging, json, time
 import random
 from datetime import datetime, timedelta
 from django.contrib import messages
@@ -15,10 +15,11 @@ import portal.creds as c
 from django.utils import timezone
 
 
+#Instantiate Box API client. 
 auth = OAuth2(
     client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
     client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-    access_token='s1mXvhgeBchkqDHFb8IY168lKcpU6pOc',
+    access_token='V0RaUXzp5sUQeBI7KIsbz1OgrmTcMqoR',
 )
 client = Client(auth)
 
@@ -49,6 +50,7 @@ def handle_webhook(request):
 
 	return HttpResponse(status=200)
 
+#function handles changing the review status and assigning a new task. 
 def update_loan_application_status(file):
 	record = get_object_or_404(LoanApplication, application_file_id=file)
 	#Update Submitted to Pending once a Loan Officer begins review. 
@@ -78,6 +80,7 @@ def update_loan_application_status(file):
 
 
 
+#Primary View for an authenticated users. This view contains the New Application form and the application history.
 class HomeView(TemplateView):
 	template_name = 'home.html'
 
@@ -103,6 +106,7 @@ class HomeView(TemplateView):
 
 	#Query list of applications submitted by current_user.
 	def get(self, request):
+		#Make sure user is authenticated. If not, redirect the user to /login. 
 		if request.user.is_authenticated:
 			form = UploadFileForm()
 			applications = LoanApplication.objects.filter(applicant_id=request.user).order_by('-updated_at')[:10]
@@ -117,35 +121,36 @@ class HomeView(TemplateView):
 	#Upload the file to Box and create the Loan Application object. 
 	def handle_uploaded_file(self, f, user):
 
-
+		#This file is not being uploaded from disk and requires utilizing the streaming upload option through the Python SDK.
 		stream = f
 		user_id_number = user.id
 
-		file_name = user.last_name + ", " + user.first_name + " - " + str(timezone.now()) + " - Loan Application.pdf"
+		FORMAT='%Y-%m-%dT%H:%M:%S'
+		file_name = user.last_name + ", " + user.first_name + " - " + str(datetime.strptime(time.strftime(FORMAT, time.localtime()),FORMAT)) + " - Loan Application.pdf"
 
 		logging.debug("the user is ", user.id, user_id_number)
 
+		#Could be more python-y but does the job for this purpose. Checks for the existence of a user profile.
+		#A UserProfile allows us to tie an application user to the folder created for them. 
 		if UserProfile.objects.filter(user_id=user.id).count() != 0:
 			user_profile = UserProfile.objects.filter(user_id=user.id)[0]
 			logging.debug("working with", user_profile)
 			subfolder_id = user_profile.box_folder_id
 		else:
-			subfolder = client.folder('0').create_subfolder(user.last_name + ',' + user.first_name + " - Applications")
+			subfolder = client.folder('0').create_subfolder(user.last_name + ', ' + user.first_name + " - Applications")
 			subfolder_id = subfolder.id
 			new_user_profile = UserProfile(user=user, box_folder_id=subfolder.id)
 			new_user_profile.save()
 
-		
+		#Begin file upload into folder. 
 		new_file = client.folder(subfolder_id).upload_stream(f, file_name)
 		logging.debug('File "{0}" uploaded to Box with file ID {1}'.format(new_file.name, new_file.id))
 		new_loan = LoanApplication.objects.create(applicant=user, application_file_id=new_file.id)
 		logging.debug('Application created with file id {0} and record {1}'.format(new_file.id, new_loan))
 		new_loan.save()
 		file = client.file(file_id=new_file.id)
-		logging.debug(file)
 		create_and_assign_task("Begin review of new application", new_file.id)
-		#https://enk477phc85mn.x.pipedream.net
-		#https://boa-loan-portal.herokuapp.com/callback/'
+		#Create the webhook with File.Previewed and Task_Assignment.Updated triggers. The handler will be /callback.
 		webhook = client.create_webhook(file, ['FILE.PREVIEWED', 'TASK_ASSIGNMENT.UPDATED'], 'https://boa-loan-portal.herokuapp.com/callback/' )
 		print('Webhook ID is {0} and the address is {1}'.format(webhook.id, webhook.address))
 
