@@ -160,6 +160,7 @@ def create_and_assign_task(message, file):
 		#Create the task on the file.
 		due_at_raw = datetime.now() + timedelta(days=5)
 		due_at = due_at_raw.strftime('%Y-%m-%dT%H:00:00+00:00')
+		action = "complete"
 		task = client.file(file_id=file).create_task(message, due_at)
 		print('Task {2} message is {0} and it is due at {1}'.format(task.message, task.due_at, task.id))
 
