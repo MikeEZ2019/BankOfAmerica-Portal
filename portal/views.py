@@ -18,8 +18,8 @@ from django.utils import timezone
 #Instantiate Box API client. 
 auth = OAuth2(
     client_id='ruaf123v1puenhi42ey8qmfyqwd3r7w4',
-    client_secret='Xc4EMVxss7DStL7CHqO74zKcYgJkfB84',
-    access_token='HOTMZcnUDxbpwZS8GwQA7VwWcA5mFhUk',
+    client_secret='XXXXXXXXX',
+    access_token='XXXXXXXXX',
 )
 client = Client(auth)
 
