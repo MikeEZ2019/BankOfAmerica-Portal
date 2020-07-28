@@ -9,7 +9,7 @@ confusable-homoglyphs==3.2.0
 cryptography==2.4.2
 cycler==0.10.0
 defusedxml==0.5.0
-Django==2.1.4
+Django==2.2.13
 django-cprofile-middleware==1.0.4
 django-debug-toolbar==1.11
 django-registration==3.0.1
