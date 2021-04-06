@@ -12,7 +12,7 @@ defusedxml==0.5.0
 Django==2.1.4
 django-cprofile-middleware==1.0.4
 django-debug-toolbar==1.11
-django-registration==3.0.1
+django-registration==3.1.2
 django-widget-tweaks==1.4.3
 ez-setup==0.9
 ftfy==5.6
